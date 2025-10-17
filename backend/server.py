@@ -79,6 +79,11 @@ api_router.include_router(messenger.router)
 # Include the router in the main app
 app.include_router(api_router)
 
+# Mount uploads directory for serving media files
+uploads_dir = Path("/app/backend/uploads")
+uploads_dir.mkdir(exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
