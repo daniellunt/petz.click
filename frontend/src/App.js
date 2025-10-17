@@ -93,12 +93,6 @@ function AppRoutes() {
         </ProtectedRoute>
       } />
       
-      <Route path="/transport" element={
-        <ProtectedRoute>
-          <DashboardLayout><TransportPage /></DashboardLayout>
-        </ProtectedRoute>
-      } />
-      
       <Route path="/tasks" element={
         <ProtectedRoute>
           <DashboardLayout><TasksPage /></DashboardLayout>
