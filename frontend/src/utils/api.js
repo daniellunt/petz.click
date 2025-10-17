@@ -70,4 +70,14 @@ export const locationAPI = {
   delete: (id) => api.delete(`/locations/${id}`),
 };
 
+// User Management APIs (Admin only)
+export const userAPI = {
+  getAll: () => api.get('/users'),
+  getOne: (id) => api.get(`/users/${id}`),
+  create: (data) => api.post('/users', data),
+  update: (id, data) => api.put(`/users/${id}`, data),
+  deactivate: (id) => api.delete(`/users/${id}`),
+  activate: (id) => api.put(`/users/${id}/activate`),
+};
+
 export default api;
