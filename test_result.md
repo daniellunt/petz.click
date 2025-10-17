@@ -175,6 +175,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "❌ Messenger APIs partially working. Unread count endpoint works, but send/get messages fail with same URL routing issue. Minor: GET /messenger/unread/count works correctly."
+      - working: "NA"
+        agent: "main"
+        comment: "Router configuration fixed - moved prefixes from router definition to include_router call in server.py to resolve trailing slash issues. Ready for retesting."
 
 frontend:
   - task: "Authentication UI (Login/Register)"
