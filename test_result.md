@@ -157,6 +157,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "❌ Booking APIs failing due to same URL routing issue as pets. 307 redirects followed by 403 Forbidden responses."
+      - working: "NA"
+        agent: "main"
+        comment: "Router configuration fixed - moved prefixes from router definition to include_router call in server.py to resolve trailing slash issues. Ready for retesting."
 
   - task: "Messenger with Media Upload"
     implemented: true
