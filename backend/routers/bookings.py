@@ -60,7 +60,7 @@ def parse_booking_from_mongo(booking_dict: dict) -> dict:
     return booking_dict
 
 
-@router.post("/", response_model=BookingResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=BookingResponse, status_code=status.HTTP_201_CREATED)
 async def create_booking(booking_data: BookingCreate, user_id: str = Depends(get_current_user)):
     """Create a new booking"""
     # Check if pet exists and belongs to user
