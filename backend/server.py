@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -9,6 +10,9 @@ from pydantic import BaseModel, Field, ConfigDict
 from typing import List
 import uuid
 from datetime import datetime, timezone
+
+# Import routers
+from routers import auth, pets, bookings, messenger
 
 
 ROOT_DIR = Path(__file__).parent
@@ -26,9 +30,9 @@ app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
 
-# Define Models
+# Define Models (keeping for backward compatibility)
 class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
+    model_config = ConfigDict(extra="ignore")
     
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
@@ -40,7 +44,7 @@ class StatusCheckCreate(BaseModel):
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Hello World from Luxury Pet Resort API"}
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
@@ -65,6 +69,12 @@ async def get_status_checks():
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     
     return status_checks
+
+# Include feature routers
+api_router.include_router(auth.router)
+api_router.include_router(pets.router)
+api_router.include_router(bookings.router)
+api_router.include_router(messenger.router)
 
 # Include the router in the main app
 app.include_router(api_router)
