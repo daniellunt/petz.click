@@ -127,15 +127,18 @@ backend:
 
   - task: "Pet Management CRUD"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/backend/routers/pets.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Full CRUD for pets with intro_completed flag tracking"
+      - working: false
+        agent: "testing"
+        comment: "❌ Pet APIs failing due to URL routing issue. Backend returns 307 redirects for /pets -> /pets/ then 403 Forbidden. Router prefix/endpoint mismatch needs fixing."
 
   - task: "Booking System with Service Types"
     implemented: true
