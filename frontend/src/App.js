@@ -8,6 +8,13 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import PetsPage from "@/pages/PetsPage";
 import BookingsPage from "@/pages/BookingsPage";
 import MessengerPage from "@/pages/MessengerPage";
+import CalendarPage from "@/pages/CalendarPage";
+import ClientsPage from "@/pages/ClientsPage";
+import RoomsPage from "@/pages/RoomsPage";
+import TasksPage from "@/pages/TasksPage";
+import IncidentsPage from "@/pages/IncidentsPage";
+import ProfilePage from "@/pages/ProfilePage";
+import SettingsPage from "@/pages/SettingsPage";
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -52,6 +59,18 @@ function AppRoutes() {
         </ProtectedRoute>
       } />
       
+      <Route path="/calendar" element={
+        <ProtectedRoute>
+          <DashboardLayout><CalendarPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/clients" element={
+        <ProtectedRoute>
+          <DashboardLayout><ClientsPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
       <Route path="/pets" element={
         <ProtectedRoute>
           <DashboardLayout><PetsPage /></DashboardLayout>
@@ -64,9 +83,39 @@ function AppRoutes() {
         </ProtectedRoute>
       } />
       
+      <Route path="/rooms" element={
+        <ProtectedRoute>
+          <DashboardLayout><RoomsPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/tasks" element={
+        <ProtectedRoute>
+          <DashboardLayout><TasksPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
       <Route path="/messenger" element={
         <ProtectedRoute>
           <DashboardLayout><MessengerPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/incidents" element={
+        <ProtectedRoute>
+          <DashboardLayout><IncidentsPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/profile" element={
+        <ProtectedRoute>
+          <DashboardLayout><ProfilePage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/settings" element={
+        <ProtectedRoute>
+          <DashboardLayout><SettingsPage /></DashboardLayout>
         </ProtectedRoute>
       } />
     </Routes>
