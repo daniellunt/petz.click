@@ -404,7 +404,7 @@ def test_messenger_system(test_results):
         "content": "Hello! I wanted to check on Luna's introduction session today. How did she do with the other pets?"
     }
     
-    response = make_request('POST', '/messenger', message_data, headers)
+    response = make_request('POST', '/messenger/', message_data, headers)
     if response and response.status_code == 201:
         message_info = response.json()
         test_results.test_messages.append(message_info)
