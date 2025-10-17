@@ -79,7 +79,18 @@ async def login(credentials: UserLogin):
     # Create access token
     access_token = create_access_token(data={"sub": user['id']})
     
-    return Token(access_token=access_token)
+    # Parse datetimes
+    if isinstance(user.get('created_at'), str):
+        from datetime import datetime
+        user['created_at'] = datetime.fromisoformat(user['created_at'])
+    if isinstance(user.get('updated_at'), str):
+        from datetime import datetime
+        user['updated_at'] = datetime.fromisoformat(user['updated_at'])
+    
+    # Create user response
+    user_response = UserResponse(**{k: v for k, v in user.items() if k != 'password_hash'})
+    
+    return Token(access_token=access_token, user=user_response)
 
 
 @router.get("/me", response_model=UserResponse)
