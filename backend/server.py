@@ -12,7 +12,7 @@ import uuid
 from datetime import datetime, timezone
 
 # Import routers
-from routers import auth, pets, bookings, messenger
+from routers import auth, pets, bookings, messenger, locations
 
 
 ROOT_DIR = Path(__file__).parent
