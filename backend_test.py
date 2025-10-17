@@ -343,7 +343,7 @@ def test_booking_system(test_results):
             "notes": "This should fail - no intro completed"
         }
         
-        response = make_request('POST', '/bookings/', daycare_booking_data_fail, headers)
+        response = make_request('POST', '/bookings', daycare_booking_data_fail, headers)
         if response and response.status_code == 400:
             test_results.add_result(
                 "Create Daycare Booking (No Intro) - Should Fail", 
