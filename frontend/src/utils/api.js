@@ -61,4 +61,13 @@ export const messengerAPI = {
   getUnreadCount: () => api.get('/messenger/unread/count'),
 };
 
+// Location APIs
+export const locationAPI = {
+  getAll: () => api.get('/locations'),
+  getOne: (id) => api.get(`/locations/${id}`),
+  create: (data) => api.post('/locations', data),
+  update: (id, data) => api.put(`/locations/${id}`, data),
+  delete: (id) => api.delete(`/locations/${id}`),
+};
+
 export default api;
