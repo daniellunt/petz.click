@@ -27,7 +27,6 @@ const navItems = [
   { to: '/pets', icon: Dog, label: 'Pets' },
   { to: '/bookings', icon: Bed, label: 'Bookings' },
   { to: '/rooms', icon: Building, label: 'Rooms' },
-  { to: '/transport', icon: Navigation, label: 'Transport' },
   { to: '/tasks', icon: ClipboardList, label: 'Tasks' },
   { to: '/messenger', icon: MessageSquare, label: 'Messages' },
   { to: '/incidents', icon: AlertTriangle, label: 'Incidents' },
