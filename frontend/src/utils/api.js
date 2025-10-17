@@ -103,4 +103,24 @@ export const roomAPI = {
   toggleAvailability: (id, isAvailable) => api.put(`/rooms/${id}/availability`, null, { params: { is_available: isAvailable } }),
 };
 
+// Transport APIs
+export const transportAPI = {
+  // Bus stops
+  getStops: (locationId, clientLat, clientLon, limit) => 
+    api.get('/transport/stops', { params: { location_id: locationId, client_lat: clientLat, client_lon: clientLon, limit } }),
+  createStop: (data) => api.post('/transport/stops', data),
+  deleteStop: (id) => api.delete(`/transport/stops/${id}`),
+  
+  // Bookings
+  getBookings: (locationId, date, status) => 
+    api.get('/transport/bookings', { params: { location_id: locationId, date, status } }),
+  getBooking: (id) => api.get(`/transport/bookings/${id}`),
+  createBooking: (data, locationId) => api.post(`/transport/bookings?location_id=${locationId}`, data),
+  updateBooking: (id, data) => api.put(`/transport/bookings/${id}`, data),
+  
+  // Settings
+  getSettings: (locationId) => api.get(`/transport/settings/${locationId}`),
+  updateSettings: (locationId, data) => api.put(`/transport/settings/${locationId}`, data),
+};
+
 export default api;
