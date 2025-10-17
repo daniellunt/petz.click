@@ -31,9 +31,10 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await authAPI.login(credentials);
-      const { access_token } = response.data;
+      const { access_token, user } = response.data;
       localStorage.setItem('token', access_token);
       setToken(access_token);
+      setUser(user);
       return { success: true };
     } catch (error) {
       return { 
@@ -46,9 +47,10 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const response = await authAPI.register(userData);
-      const { access_token } = response.data;
+      const { access_token, user } = response.data;
       localStorage.setItem('token', access_token);
       setToken(access_token);
+      setUser(user);
       return { success: true };
     } catch (error) {
       return { 
