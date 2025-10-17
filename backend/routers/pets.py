@@ -4,14 +4,13 @@ from typing import List
 import os
 from models.pet import Pet, PetCreate, PetUpdate, PetResponse
 from utils.auth import get_current_user
+from utils.database import get_db
 from datetime import datetime
 
 router = APIRouter(prefix="/pets", tags=["pets"])
 
 # Get database connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = get_db()
 
 
 def prepare_pet_for_mongo(pet_dict: dict) -> dict:
