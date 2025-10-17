@@ -283,7 +283,7 @@ def test_booking_system(test_results):
         "notes": "First visit - Luna is friendly but may be nervous initially"
     }
     
-    response = make_request('POST', '/bookings/', intro_booking_data, headers)
+    response = make_request('POST', '/bookings', intro_booking_data, headers)
     if response and response.status_code == 201:
         booking_info = response.json()
         test_results.test_bookings.append(booking_info)
