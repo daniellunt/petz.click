@@ -19,6 +19,7 @@ import SettingsPage from "@/pages/SettingsPage";
 import LocationsManagementPage from "@/pages/LocationsManagementPage";
 import UsersManagementPage from "@/pages/UsersManagementPage";
 import ServicesManagementPage from "@/pages/ServicesManagementPage";
+import TransportPage from "@/pages/TransportPage";
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
