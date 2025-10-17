@@ -249,10 +249,7 @@ test_plan:
     - "Pet Management CRUD"
     - "Booking System with Service Types"
     - "Messenger with Media Upload"
-  stuck_tasks: 
-    - "Pet Management CRUD"
-    - "Booking System with Service Types" 
-    - "Messenger with Media Upload"
+  stuck_tasks: []
   test_all: true
   test_priority: "high_first"
 
