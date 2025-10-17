@@ -2,6 +2,7 @@ import React from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { LocationProvider } from "@/context/LocationContext";
 import AuthPage from "@/pages/AuthPage";
 import HomePage from "@/pages/HomePage";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
@@ -15,6 +16,7 @@ import TasksPage from "@/pages/TasksPage";
 import IncidentsPage from "@/pages/IncidentsPage";
 import ProfilePage from "@/pages/ProfilePage";
 import SettingsPage from "@/pages/SettingsPage";
+import LocationsManagementPage from "@/pages/LocationsManagementPage";
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
