@@ -142,15 +142,18 @@ backend:
 
   - task: "Booking System with Service Types"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/backend/routers/bookings.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Booking system with 4 service types (introduction, daycare, boarding, timed). Enforces introduction requirement before other services"
+      - working: false
+        agent: "testing"
+        comment: "❌ Booking APIs failing due to same URL routing issue as pets. 307 redirects followed by 403 Forbidden responses."
 
   - task: "Messenger with Media Upload"
     implemented: true
