@@ -98,7 +98,7 @@ async def create_booking(booking_data: BookingCreate, user_id: str = Depends(get
     return BookingResponse(**booking.model_dump())
 
 
-@router.get("/", response_model=List[BookingResponse])
+@router.get("", response_model=List[BookingResponse])
 async def get_user_bookings(user_id: str = Depends(get_current_user)):
     """Get all bookings for the current user"""
     bookings = await db.bookings.find({"user_id": user_id}, {"_id": 0}).to_list(100)
