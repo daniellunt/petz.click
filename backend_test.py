@@ -215,7 +215,7 @@ def test_pet_management(test_results):
             test_results.add_result(f"Create Pet - {pet_data['name']}", False, error=error_msg)
     
     # Test get all pets
-    response = make_request('GET', '/pets', headers=headers)
+    response = make_request('GET', '/pets/', headers=headers)
     if response and response.status_code == 200:
         pets = response.json()
         test_results.add_result(
