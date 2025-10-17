@@ -5,14 +5,13 @@ import os
 from models.message import Message, MessageCreate, MessageResponse, SenderType
 from utils.auth import get_current_user
 from utils.file_handler import save_upload_file
+from utils.database import get_db
 from datetime import datetime
 
 router = APIRouter(prefix="/messenger", tags=["messenger"])
 
 # Get database connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = get_db()
 
 
 def prepare_message_for_mongo(message_dict: dict) -> dict:
