@@ -247,3 +247,13 @@ agent_communication:
       - Booking system with service type validation
       - Messenger with media upload
       Frontend is showing login page. Ready for backend API testing.
+  - agent: "testing"
+    message: |
+      Backend testing completed. CRITICAL ISSUE FOUND: URL routing problem affecting most APIs.
+      
+      ✅ WORKING: Authentication APIs (register, login, get user info)
+      ❌ FAILING: Pet, Booking, and Messenger APIs due to FastAPI router configuration
+      
+      ROOT CAUSE: Router prefixes (/pets, /bookings, /messenger) + endpoint paths (/) create URLs ending with trailing slashes (/pets/, /bookings/, /messenger/), but requests without trailing slashes get 307 redirects then 403 Forbidden.
+      
+      SOLUTION NEEDED: Fix router configuration to handle both /pets and /pets/ or update all API calls to use trailing slashes consistently.
