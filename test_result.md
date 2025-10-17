@@ -139,6 +139,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "❌ Pet APIs failing due to URL routing issue. Backend returns 307 redirects for /pets -> /pets/ then 403 Forbidden. Router prefix/endpoint mismatch needs fixing."
+      - working: "NA"
+        agent: "main"
+        comment: "Router configuration fixed - moved prefixes from router definition to include_router call in server.py to resolve trailing slash issues. Ready for retesting."
 
   - task: "Booking System with Service Types"
     implemented: true
