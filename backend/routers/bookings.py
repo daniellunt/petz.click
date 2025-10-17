@@ -7,14 +7,13 @@ from models.booking import (
     ServiceType, BookingStatus
 )
 from utils.auth import get_current_user
+from utils.database import get_db
 from datetime import datetime
 
 router = APIRouter(prefix="/bookings", tags=["bookings"])
 
 # Get database connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = get_db()
 
 
 def prepare_booking_for_mongo(booking_dict: dict) -> dict:
