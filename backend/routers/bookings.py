@@ -10,7 +10,7 @@ from utils.auth import get_current_user
 from utils.database import get_db
 from datetime import datetime
 
-router = APIRouter(prefix="/bookings", tags=["bookings"])
+router = APIRouter(tags=["bookings"])
 
 # Get database connection
 db = get_db()
