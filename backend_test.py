@@ -418,7 +418,7 @@ def test_messenger_system(test_results):
         test_results.add_result("Send Text Message", False, error=error_msg)
     
     # Test get messages
-    response = make_request('GET', '/messenger/', headers=headers)
+    response = make_request('GET', '/messenger', headers=headers)
     if response and response.status_code == 200:
         messages = response.json()
         test_results.add_result(
