@@ -71,10 +71,10 @@ async def get_status_checks():
     return status_checks
 
 # Include feature routers
-api_router.include_router(auth.router)
-api_router.include_router(pets.router)
-api_router.include_router(bookings.router)
-api_router.include_router(messenger.router)
+api_router.include_router(auth.router, prefix="/auth")
+api_router.include_router(pets.router, prefix="/pets")
+api_router.include_router(bookings.router, prefix="/bookings")
+api_router.include_router(messenger.router, prefix="/messenger")
 
 # Include the router in the main app
 app.include_router(api_router)
