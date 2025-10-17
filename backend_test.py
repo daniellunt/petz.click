@@ -358,7 +358,7 @@ def test_booking_system(test_results):
             )
     
     # Test get all bookings
-    response = make_request('GET', '/bookings/', headers=headers)
+    response = make_request('GET', '/bookings', headers=headers)
     if response and response.status_code == 200:
         bookings = response.json()
         test_results.add_result(
