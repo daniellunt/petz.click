@@ -477,7 +477,7 @@ def test_error_cases(test_results):
         test_results.add_result(
             "Unauthorized Access - Should Fail", 
             False, 
-            error="Should have failed with 401 but didn't"
+            error="Should have failed with 401/403 but didn't"
         )
     
     # Test invalid login
