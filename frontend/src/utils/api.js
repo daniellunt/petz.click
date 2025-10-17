@@ -93,4 +93,14 @@ export const serviceAPI = {
   deleteAddon: (id) => api.delete(`/services/addons/${id}`),
 };
 
+// Rooms APIs
+export const roomAPI = {
+  getAll: (locationId) => api.get('/rooms', { params: { location_id: locationId } }),
+  getOne: (id) => api.get(`/rooms/${id}`),
+  create: (data) => api.post('/rooms', data),
+  update: (id, data) => api.put(`/rooms/${id}`, data),
+  delete: (id) => api.delete(`/rooms/${id}`),
+  toggleAvailability: (id, isAvailable) => api.put(`/rooms/${id}/availability`, null, { params: { is_available: isAvailable } }),
+};
+
 export default api;
