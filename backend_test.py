@@ -77,7 +77,7 @@ def make_request(method, endpoint, data=None, headers=None, files=None):
         
         return response
     except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
+        print(f"Request failed for {method} {url}: {e}")
         return None
 
 def test_authentication(test_results):
