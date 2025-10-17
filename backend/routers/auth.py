@@ -105,8 +105,11 @@ async def get_current_user_info(user_id: str = Depends(get_current_user)):
         )
     
     # Parse datetime from ISO string
-    if isinstance(user['created_at'], str):
+    if isinstance(user.get('created_at'), str):
         from datetime import datetime
         user['created_at'] = datetime.fromisoformat(user['created_at'])
+    if isinstance(user.get('updated_at'), str):
+        from datetime import datetime
+        user['updated_at'] = datetime.fromisoformat(user['updated_at'])
     
     return UserResponse(**user)
