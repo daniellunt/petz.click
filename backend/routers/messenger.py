@@ -8,7 +8,7 @@ from utils.file_handler import save_upload_file
 from utils.database import get_db
 from datetime import datetime
 
-router = APIRouter(prefix="/messenger", tags=["messenger"])
+router = APIRouter(tags=["messenger"])
 
 # Get database connection
 db = get_db()
