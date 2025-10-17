@@ -87,8 +87,10 @@ def test_authentication(test_results):
     print("="*50)
     
     # Test user registration
+    import time
+    timestamp = int(time.time())
     user_data = {
-        "email": "sophia.martinez@luxurypets.com",
+        "email": f"sophia.martinez.{timestamp}@luxurypets.com",
         "name": "Sophia Martinez",
         "phone": "+1-555-0123",
         "password": "SecurePetLover2024!"
