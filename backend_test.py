@@ -60,18 +60,21 @@ def make_request(method, endpoint, data=None, headers=None, files=None):
     """Make HTTP request with error handling"""
     url = f"{API_BASE_URL}{endpoint}"
     
+    # Create a new session for each request to avoid connection issues
+    session = requests.Session()
+    
     try:
         if method.upper() == 'GET':
-            response = requests.get(url, headers=headers, timeout=30)
+            response = session.get(url, headers=headers, timeout=30)
         elif method.upper() == 'POST':
             if files:
-                response = requests.post(url, data=data, files=files, headers=headers, timeout=30)
+                response = session.post(url, data=data, files=files, headers=headers, timeout=30)
             else:
-                response = requests.post(url, json=data, headers=headers, timeout=30)
+                response = session.post(url, json=data, headers=headers, timeout=30)
         elif method.upper() == 'PUT':
-            response = requests.put(url, json=data, headers=headers, timeout=30)
+            response = session.put(url, json=data, headers=headers, timeout=30)
         elif method.upper() == 'DELETE':
-            response = requests.delete(url, headers=headers, timeout=30)
+            response = session.delete(url, headers=headers, timeout=30)
         else:
             raise ValueError(f"Unsupported method: {method}")
         
@@ -79,6 +82,8 @@ def make_request(method, endpoint, data=None, headers=None, files=None):
     except requests.exceptions.RequestException as e:
         print(f"Request failed for {method} {url}: {e}")
         return None
+    finally:
+        session.close()
 
 def test_authentication(test_results):
     """Test authentication endpoints"""
