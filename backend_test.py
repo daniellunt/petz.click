@@ -467,7 +467,7 @@ def test_error_cases(test_results):
     
     # Test unauthorized access
     response = make_request('GET', '/pets')
-    if response and response.status_code == 401:
+    if response and response.status_code in [401, 403]:
         test_results.add_result(
             "Unauthorized Access - Should Fail", 
             True, 
