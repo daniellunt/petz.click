@@ -80,4 +80,17 @@ export const userAPI = {
   activate: (id) => api.put(`/users/${id}/activate`),
 };
 
+// Services APIs
+export const serviceAPI = {
+  getAll: (locationId) => api.get('/services', { params: { location_id: locationId } }),
+  getOne: (id) => api.get(`/services/${id}`),
+  create: (data) => api.post('/services', data),
+  update: (id, data) => api.put(`/services/${id}`, data),
+  delete: (id) => api.delete(`/services/${id}`),
+  // Add-ons
+  getAddons: (locationId) => api.get('/services/addons', { params: { location_id: locationId } }),
+  createAddon: (data) => api.post('/services/addons', data),
+  deleteAddon: (id) => api.delete(`/services/addons/${id}`),
+};
+
 export default api;
