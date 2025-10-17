@@ -109,6 +109,11 @@ const DashboardLayout = ({ children }) => {
           </Button>
         </div>
 
+        {/* Location Switcher */}
+        <div className="px-2 py-2 border-b">
+          <LocationSwitcher isCollapsed={isCollapsed} />
+        </div>
+
         {/* User Info */}
         {!isCollapsed && user && (
           <div className="px-4 py-3 border-b bg-gray-50">
