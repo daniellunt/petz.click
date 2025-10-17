@@ -127,6 +127,12 @@ function AppRoutes() {
           <DashboardLayout><LocationsManagementPage /></DashboardLayout>
         </ProtectedRoute>
       } />
+      
+      <Route path="/settings/users" element={
+        <ProtectedRoute>
+          <DashboardLayout><UsersManagementPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
     </Routes>
   );
 }
