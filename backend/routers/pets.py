@@ -54,7 +54,7 @@ async def create_pet(pet_data: PetCreate, user_id: str = Depends(get_current_use
     return PetResponse(**pet.model_dump())
 
 
-@router.get("/", response_model=List[PetResponse])
+@router.get("", response_model=List[PetResponse])
 async def get_user_pets(user_id: str = Depends(get_current_user)):
     """Get all pets for the current user"""
     pets = await db.pets.find({"user_id": user_id}, {"_id": 0}).to_list(100)
