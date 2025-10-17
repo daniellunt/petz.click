@@ -319,7 +319,7 @@ def test_booking_system(test_results):
         "notes": "Luna loves playing with other dogs"
     }
     
-    response = make_request('POST', '/bookings/', daycare_booking_data, headers)
+    response = make_request('POST', '/bookings', daycare_booking_data, headers)
     if response and response.status_code == 201:
         booking_info = response.json()
         test_results.test_bookings.append(booking_info)
