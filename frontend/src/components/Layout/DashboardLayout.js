@@ -68,6 +68,9 @@ const DashboardLayout = ({ children }) => {
     navigate('/auth');
   };
 
+  // Show Locations menu item only for admin users
+  const isAdmin = user?.role === 'admin';
+
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
