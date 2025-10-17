@@ -27,24 +27,41 @@ async def register(user_data: UserCreate):
             detail="Email already registered"
         )
     
-    # Create user
+    # Create user with default values for new fields
     user = User(
         email=user_data.email,
         name=user_data.name,
         phone=user_data.phone,
-        password_hash=get_password_hash(user_data.password)
+        password_hash=get_password_hash(user_data.password),
+        role=user_data.role if hasattr(user_data, 'role') else "client",
+        location_ids=user_data.location_ids if hasattr(user_data, 'location_ids') else []
     )
     
     # Convert to dict and serialize datetime
     user_dict = user.model_dump()
     user_dict['created_at'] = user_dict['created_at'].isoformat()
+    user_dict['updated_at'] = user_dict['updated_at'].isoformat()
     
     await db.users.insert_one(user_dict)
     
     # Create access token
     access_token = create_access_token(data={"sub": user.id})
     
-    return Token(access_token=access_token)
+    # Create user response
+    user_response = UserResponse(
+        id=user.id,
+        email=user.email,
+        name=user.name,
+        phone=user.phone,
+        role=user.role,
+        location_ids=user.location_ids,
+        avatar_url=user.avatar_url,
+        is_active=user.is_active,
+        created_at=user.created_at,
+        updated_at=user.updated_at
+    )
+    
+    return Token(access_token=access_token, user=user_response)
 
 
 @router.post("/login", response_model=Token)
