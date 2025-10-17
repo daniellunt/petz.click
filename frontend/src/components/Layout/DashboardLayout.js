@@ -143,6 +143,7 @@ const DashboardLayout = ({ children }) => {
 
         {/* Bottom Navigation */}
         <div className="px-2 py-4 border-t mt-auto">
+          {isAdmin && <NavItem item={{ to: '/locations', icon: Building, label: 'Locations' }} isCollapsed={isCollapsed} />}
           {bottomNavItems.map(item => (
             <NavItem key={item.to} item={item} isCollapsed={isCollapsed} />
           ))}
