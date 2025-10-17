@@ -338,12 +338,6 @@ def test_booking_system(test_results):
     if len(test_results.test_pets) > 1:
         pet_without_intro_id = test_results.test_pets[1]['id']
         
-        # First check the pet's intro status
-        pet_check_response = make_request('GET', f'/pets/{pet_without_intro_id}', headers=headers)
-        if pet_check_response and pet_check_response.status_code == 200:
-            pet_info = pet_check_response.json()
-            print(f"DEBUG: Pet {pet_without_intro_id} intro_completed: {pet_info.get('intro_completed', False)}")
-        
         daycare_booking_data_fail = {
             "pet_id": pet_without_intro_id,
             "service_type": "daycare",
