@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLoadScript, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api';
-import { transportAPI, clientAPI } from '@/utils/api';
+import { transportAPI } from '@/utils/api';
 import { useLocation } from '@/context/LocationContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,7 +13,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash2, MapPin, Bus, Car, Navigation, Settings as SettingsIcon } from 'lucide-react';
 
-const libraries = ['places', 'geometry'];
+// Define libraries outside component to prevent re-renders
+const LIBRARIES = ['places'];
+
 const mapContainerStyle = {
   width: '100%',
   height: '400px',
@@ -27,13 +29,27 @@ const defaultCenter = {
 const TransportPage = () => {
   const { selectedLocation } = useLocation();
   const [activeTab, setActiveTab] = useState('bookings');
+  
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '',
+    libraries: LIBRARIES,
   });
 
-  if (loadError) return <div>Error loading maps</div>;
-  if (!isLoaded) return <div>Loading Maps...</div>;
+  if (loadError) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-red-600">Error loading Google Maps. Please check your API key.</p>
+      </div>
+    );
+  }
+
+  if (!isLoaded) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-600">Loading Maps...</p>
+      </div>
+    );
+  }
 
   if (!selectedLocation) {
     return (
@@ -62,7 +78,7 @@ const TransportPage = () => {
         </TabsContent>
 
         <TabsContent value="stops">
-          <BusStopsTab locationId={selectedLocation.id} />
+          <BusStopsTab locationId={selectedLocation.id} isLoaded={isLoaded} />
         </TabsContent>
 
         <TabsContent value="settings">
@@ -74,11 +90,10 @@ const TransportPage = () => {
 };
 
 // Bus Stops Management Tab
-const BusStopsTab = ({ locationId }) => {
+const BusStopsTab = ({ locationId, isLoaded }) => {
   const [stops, setStops] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [map, setMap] = useState(null);
 
   useEffect(() => {
     fetchStops();
@@ -106,10 +121,6 @@ const BusStopsTab = ({ locationId }) => {
     }
   };
 
-  const onMapLoad = useCallback((map) => {
-    setMap(map);
-  }, []);
-
   if (loading) return <div>Loading stops...</div>;
 
   return (
@@ -122,7 +133,7 @@ const BusStopsTab = ({ locationId }) => {
       </div>
 
       {/* Map showing all stops */}
-      {stops.length > 0 && (
+      {stops.length > 0 && isLoaded && (
         <Card>
           <CardHeader>
             <CardTitle>Bus Stops Map</CardTitle>
@@ -132,16 +143,16 @@ const BusStopsTab = ({ locationId }) => {
               mapContainerStyle={mapContainerStyle}
               center={stops[0] ? { lat: stops[0].latitude, lng: stops[0].longitude } : defaultCenter}
               zoom={12}
-              onLoad={onMapLoad}
+              options={{
+                disableDefaultUI: false,
+                zoomControl: true,
+              }}
             >
               {stops.map((stop) => (
                 <Marker
                   key={stop.id}
                   position={{ lat: stop.latitude, lng: stop.longitude }}
                   title={stop.name}
-                  icon={{
-                    url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-                  }}
                 />
               ))}
             </GoogleMap>
@@ -192,21 +203,23 @@ const BusStopsTab = ({ locationId }) => {
       )}
 
       {/* Add Stop Dialog */}
-      <Dialog open={showForm} onOpenChange={setShowForm}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Add Bus Stop</DialogTitle>
-          </DialogHeader>
-          <BusStopForm
-            locationId={locationId}
-            onSave={() => {
-              setShowForm(false);
-              fetchStops();
-            }}
-            onCancel={() => setShowForm(false)}
-          />
-        </DialogContent>
-      </Dialog>
+      {isLoaded && (
+        <Dialog open={showForm} onOpenChange={setShowForm}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Add Bus Stop</DialogTitle>
+            </DialogHeader>
+            <BusStopForm
+              locationId={locationId}
+              onSave={() => {
+                setShowForm(false);
+                fetchStops();
+              }}
+              onCancel={() => setShowForm(false)}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
@@ -223,8 +236,6 @@ const BusStopForm = ({ locationId, onSave, onCancel }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [map, setMap] = useState(null);
-  const [marker, setMarker] = useState(null);
 
   const handleMapClick = useCallback((e) => {
     const lat = e.latLng.lat();
@@ -237,15 +248,17 @@ const BusStopForm = ({ locationId, onSave, onCancel }) => {
     }));
     
     // Get address from coordinates
-    const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ location: { lat, lng } }, (results, status) => {
-      if (status === 'OK' && results[0]) {
-        setFormData(prev => ({
-          ...prev,
-          address: results[0].formatted_address
-        }));
-      }
-    });
+    if (window.google && window.google.maps) {
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+        if (status === 'OK' && results[0]) {
+          setFormData(prev => ({
+            ...prev,
+            address: results[0].formatted_address
+          }));
+        }
+      });
+    }
   }, []);
 
   const handleSubmit = async (e) => {
@@ -278,7 +291,10 @@ const BusStopForm = ({ locationId, onSave, onCancel }) => {
           center={defaultCenter}
           zoom={12}
           onClick={handleMapClick}
-          onLoad={setMap}
+          options={{
+            disableDefaultUI: false,
+            zoomControl: true,
+          }}
         >
           {formData.latitude !== 0 && formData.longitude !== 0 && (
             <Marker
