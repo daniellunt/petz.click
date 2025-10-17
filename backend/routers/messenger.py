@@ -27,7 +27,7 @@ def parse_message_from_mongo(message_dict: dict) -> dict:
     return message_dict
 
 
-@router.post("/", response_model=MessageResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=MessageResponse, status_code=status.HTTP_201_CREATED)
 async def send_message(message_data: MessageCreate, user_id: str = Depends(get_current_user)):
     """Send a text message"""
     message = Message(
