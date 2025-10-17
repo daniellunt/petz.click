@@ -1,53 +1,85 @@
-import { useEffect } from "react";
+import React from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
+import AuthPage from "@/pages/AuthPage";
+import HomePage from "@/pages/HomePage";
+import DashboardLayout from "@/components/Layout/DashboardLayout";
+import PetsPage from "@/pages/PetsPage";
+import BookingsPage from "@/pages/BookingsPage";
+import MessengerPage from "@/pages/MessengerPage";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+  
+  return isAuthenticated ? children : <Navigate to="/auth" />;
 };
+
+// Public Route (redirect to home if authenticated)
+const PublicRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+  
+  return !isAuthenticated ? children : <Navigate to="/home" />;
+};
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/auth" element={<PublicRoute><AuthPage /></PublicRoute>} />
+      
+      <Route path="/" element={<Navigate to="/home" />} />
+      
+      <Route path="/home" element={
+        <ProtectedRoute>
+          <DashboardLayout><HomePage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/pets" element={
+        <ProtectedRoute>
+          <DashboardLayout><PetsPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/bookings" element={
+        <ProtectedRoute>
+          <DashboardLayout><BookingsPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/messenger" element={
+        <ProtectedRoute>
+          <DashboardLayout><MessengerPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
+    </Routes>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        <AppRoutes />
       </BrowserRouter>
-    </div>
+    </AuthProvider>
   );
 }
 
