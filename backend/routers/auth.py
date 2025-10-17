@@ -8,13 +8,12 @@ from utils.auth import (
     create_access_token,
     get_current_user
 )
+from utils.database import get_db
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 # Get database connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = get_db()
 
 
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
