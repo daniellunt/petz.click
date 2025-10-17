@@ -290,3 +290,22 @@ agent_communication:
       ROUTER FIX APPLIED: Changed router endpoints from "/" to "" to eliminate 307 redirects.
       
       Minor test execution issues observed but core functionality verified working through isolated testing.
+
+  - agent: "user"
+    message: |
+      ❌ CRITICAL ERROR: "Illegal constructor" error preventing app from loading.
+      TypeError: Illegal constructor at react_stack_bottom_frame
+  - agent: "main"
+    message: |
+      ✅ FIXED: Google Maps "Illegal constructor" error resolved.
+      
+      ROOT CAUSE: @react-google-maps/api library was still installed in package.json even though code was removed from TransportPage.
+      The library was initializing on load and causing the constructor error.
+      
+      ACTIONS TAKEN:
+      1. Removed @react-google-maps/api from package.json using yarn remove
+      2. Removed REACT_APP_GOOGLE_MAPS_API_KEY from frontend/.env
+      3. Restarted frontend service
+      
+      RESULT: App now loads correctly, showing login page without errors.
+      Transport page remains functional with manual coordinate entry (Google Maps integration deferred).
