@@ -358,10 +358,13 @@ def test_booking_system(test_results):
                 "Correctly rejected booking for pet without intro"
             )
         else:
+            error_msg = f"Should have failed with 400 but got {response.status_code if response else 'None'}"
+            if response:
+                error_msg += f" - {response.text}"
             test_results.add_result(
                 "Create Daycare Booking (No Intro) - Should Fail", 
                 False, 
-                error="Should have failed but didn't"
+                error=error_msg
             )
     
     # Test get all bookings
