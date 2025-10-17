@@ -352,10 +352,11 @@ def test_booking_system(test_results):
             "notes": "This should fail - no intro completed"
         }
         
+        # Add small delay to avoid connection issues
+        import time
+        time.sleep(0.5)
+        
         response = make_request('POST', '/bookings', daycare_booking_data_fail, headers)
-        print(f"DEBUG: Booking response status: {response.status_code if response else 'None'}")
-        if response:
-            print(f"DEBUG: Booking response: {response.text}")
         if response and response.status_code == 400:
             test_results.add_result(
                 "Create Daycare Booking (No Intro) - Should Fail", 
