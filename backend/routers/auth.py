@@ -10,7 +10,7 @@ from utils.auth import (
 )
 from utils.database import get_db
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(tags=["auth"])
 
 # Get database connection
 db = get_db()
