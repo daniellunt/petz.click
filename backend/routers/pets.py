@@ -40,7 +40,7 @@ def parse_pet_from_mongo(pet_dict: dict) -> dict:
     return pet_dict
 
 
-@router.post("/", response_model=PetResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=PetResponse, status_code=status.HTTP_201_CREATED)
 async def create_pet(pet_data: PetCreate, user_id: str = Depends(get_current_user)):
     """Create a new pet for the current user"""
     pet = Pet(
