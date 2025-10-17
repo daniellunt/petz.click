@@ -127,11 +127,11 @@ backend:
 
   - task: "Pet Management CRUD"
     implemented: true
-    working: false
+    working: true
     file: "/app/backend/routers/pets.py"
     stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
@@ -142,6 +142,9 @@ backend:
       - working: "NA"
         agent: "main"
         comment: "Router configuration fixed - moved prefixes from router definition to include_router call in server.py to resolve trailing slash issues. Ready for retesting."
+      - working: true
+        agent: "testing"
+        comment: "✅ Pet Management APIs working correctly after router fix. All CRUD operations (create, read, update, delete) pass. Fixed router endpoints from '/' to '' to eliminate trailing slash redirects."
 
   - task: "Booking System with Service Types"
     implemented: true
