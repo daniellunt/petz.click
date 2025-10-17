@@ -257,3 +257,7 @@ agent_communication:
       ROOT CAUSE: Router prefixes (/pets, /bookings, /messenger) + endpoint paths (/) create URLs ending with trailing slashes (/pets/, /bookings/, /messenger/), but requests without trailing slashes get 307 redirects then 403 Forbidden.
       
       SOLUTION NEEDED: Fix router configuration to handle both /pets and /pets/ or update all API calls to use trailing slashes consistently.
+  - agent: "main"
+    message: |
+      FIXED: Router configuration issue resolved. Moved prefixes from router definition to include_router call in server.py.
+      This ensures clean URLs without trailing slash issues. Ready for re-testing.
