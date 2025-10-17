@@ -201,7 +201,7 @@ def test_pet_management(test_results):
     ]
     
     for pet_data in pets_data:
-        response = make_request('POST', '/pets/', pet_data, headers)
+        response = make_request('POST', '/pets', pet_data, headers)
         if response and response.status_code == 201:
             pet_info = response.json()
             test_results.test_pets.append(pet_info)
