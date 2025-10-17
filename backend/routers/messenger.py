@@ -74,7 +74,7 @@ async def send_message_with_media(
     return MessageResponse(**message.model_dump())
 
 
-@router.get("/", response_model=List[MessageResponse])
+@router.get("", response_model=List[MessageResponse])
 async def get_messages(user_id: str = Depends(get_current_user), limit: int = 50):
     """Get messages for the current user"""
     messages = await db.messages.find(
