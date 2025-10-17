@@ -346,9 +346,6 @@ def test_booking_system(test_results):
         }
         
         response = make_request('POST', '/bookings', daycare_booking_data_fail, headers)
-        print(f"DEBUG: Daycare booking for pet {pet_without_intro_id} returned status {response.status_code if response else 'None'}")
-        if response:
-            print(f"DEBUG: Response text: {response.text}")
         if response and response.status_code == 400:
             test_results.add_result(
                 "Create Daycare Booking (No Intro) - Should Fail", 
