@@ -120,6 +120,12 @@ function AppRoutes() {
           <DashboardLayout><SettingsPage /></DashboardLayout>
         </ProtectedRoute>
       } />
+      
+      <Route path="/locations" element={
+        <ProtectedRoute>
+          <DashboardLayout><LocationsManagementPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
     </Routes>
   );
 }
@@ -127,9 +133,11 @@ function AppRoutes() {
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <LocationProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </LocationProvider>
     </AuthProvider>
   );
 }
