@@ -134,6 +134,12 @@ function AppRoutes() {
           <DashboardLayout><UsersManagementPage /></DashboardLayout>
         </ProtectedRoute>
       } />
+      
+      <Route path="/settings/pricing" element={
+        <ProtectedRoute>
+          <DashboardLayout><ServicesManagementPage /></DashboardLayout>
+        </ProtectedRoute>
+      } />
     </Routes>
   );
 }
